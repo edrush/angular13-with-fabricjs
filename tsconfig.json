@@ -22,6 +22,7 @@
       "es2020",
       "dom"
     ],
+    //Stackblitz dirty fix
     "noImplicitAny": false,
   },
   "angularCompilerOptions": {
