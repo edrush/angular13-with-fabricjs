@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
 
   canvas: fabric.Canvas;
 
-  /*pausePanning = false;
-  zoomStartScale = 0;
+  pausePanning = false;
+  /*zoomStartScale = 0;
   currentX;
   currentY;
   xChange;
@@ -56,6 +56,11 @@ export class AppComponent implements OnInit {
       this.canvas.add(img);
     });
 
+    this.canvas.on('selection:created', e => {
+      this.output.push(`selection:created`);
+      this.pausePanning = true;
+    });
+
     /*this.canvas.on('touch:gesture', e => {
       //this.output.push(`touch:gesture (${e.e.touches.length})`);
       if (e.e.touches && e.e.touches.length == 2) {
@@ -69,11 +74,6 @@ export class AppComponent implements OnInit {
         this.output.push(`zoom`);
         this.pausePanning = false;
       }
-    });
-
-    this.canvas.on('selection:created', e => {
-      this.output.push(`selection:created`);
-      this.pausePanning = true;
     });
 
     this.canvas.on('selection:cleared', e => {
