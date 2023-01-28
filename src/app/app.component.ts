@@ -15,16 +15,6 @@ export class AppComponent implements OnInit {
 
   canvas: fabric.Canvas;
 
-  pausePanning = false;
-
-  /*zoomStartScale = 0;
-  currentX;
-  currentY;
-  xChange;
-  yChange;
-  lastX;
-  lastY;*/
-
   constructor() {
     // Initialization inside the constructor
     this.canvas = new fabric.Canvas('canvas', {});
@@ -93,6 +83,18 @@ export class AppComponent implements OnInit {
         // @ts-ignore
         group3.push(object);
     });
+
+    let textEditable = new fabric.Textbox(
+      'Ein Schloß am Chiemsee...', {
+        originY: 'bottom',
+        left: 10,
+        top: canvas.getHeight() - 10,
+        width: 500,
+        editable: true
+      }).set({fill: '#FFF'});
+
+    // Render the Textbox in canvas
+    canvas.add(textEditable);
   }
 
   onSave(event?: MouseEvent) {
