@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   canvas: fabric.Canvas;
 
   pausePanning = false;
+
   /*zoomStartScale = 0;
   currentX;
   currentY;
@@ -31,11 +32,28 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {
-      backgroundColor: '#232323',
-      width: 400,
-      height: 400,
+      backgroundColor: '#5b240d',
+      width: 1024,
+      height: 680,
       selection: false,
     });
+
+    let group = [];
+    const canvas = this.canvas;
+    fabric.loadSVGFromURL('/assets/Logo-signseeing.svg', function () {
+        let loadedObjects = new fabric.Group(group);
+        loadedObjects.set({
+          left: 10,
+          top: 10,
+        });
+        canvas.add(loadedObjects);
+        canvas.renderAll();
+      },
+      function (item, object) {
+        object.set('id', item.getAttribute('id'));
+        // @ts-ignore
+        group.push(object);
+      });
 
     const rect = new fabric.Rect({
       top: 100,
@@ -54,8 +72,8 @@ export class AppComponent implements OnInit {
       });
       this.canvas.add(img);
     }, {
-        crossOrigin: "Anonymous",
-  });
+      crossOrigin: "Anonymous",
+    });
 
     this.canvas.on('selection:created', e => {
       this.output.push(`selection:created`);
@@ -170,7 +188,7 @@ export class AppComponent implements OnInit {
   dataURItoBlob(dataURI: string) {
     const binary = atob(dataURI.split(',')[1]);
     let array: number[] = [];
-    for(let i = 0; i < binary.length; i++) {
+    for (let i = 0; i < binary.length; i++) {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], {type: 'image/png'});
