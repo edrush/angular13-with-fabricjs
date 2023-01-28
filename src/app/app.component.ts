@@ -1,8 +1,6 @@
 import {
   Component,
-  ElementRef,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { fabric } from 'fabric';
 
@@ -48,13 +46,16 @@ export class AppComponent implements OnInit {
     });
     this.canvas.add(rect);
 
-    fabric.Image.fromURL('https://i.pinimg.com/originals/ed/55/22/ed55223749f1d995b2bb0cbb24692c1d.jpg', (img) => {
+    fabric.Image.fromURL('https://ae01.alicdn.com/kf/HTB1wM8QLpXXXXcgXVXXq6xXFXXXB/223239535/HTB1wM8QLpXXXXcgXVXXq6xXFXXXB.jpg?size=172993&height=1082&width=790&hash=62c4f508fb7a71cf577223a35c25f896', (img) => {
+      img.crossOrigin = 'Anonymous';
       img.scale(0.5).set({
         left: 150,
         top: 100
       });
       this.canvas.add(img);
-    });
+    }, {
+        crossOrigin: "Anonymous",
+  });
 
     this.canvas.on('selection:created', e => {
       this.output.push(`selection:created`);
@@ -135,6 +136,44 @@ export class AppComponent implements OnInit {
         info.insertBefore(text, info.firstChild);
       }
     });*/
+  }
+
+  onSave(event?: MouseEvent) {
+    // @ts-ignore
+    event.target.href = this.canvas.toDataURL({
+      format: "png"
+    });
+    // @ts-ignore
+    event.target.download = 'canvas.png';
+  }
+
+  onPush() {
+    const formData = new FormData();
+    const canvasBlob = this.getCanvasBlob(this.canvas);
+    formData.append('canvasImage', canvasBlob);
+
+    fetch('http://localhost/api/endpoint', {
+      method: 'post',
+      cache: 'no-cache',
+      body: formData
+    })
+      .then(data => console.log(data))
+  }
+
+  getCanvasBlob(canvas: fabric.Canvas) {
+    // toDataURL encodes your canvas as a string
+    const base64 = canvas.toDataURL();
+    return this.dataURItoBlob(base64);
+  }
+
+  // https://stackoverflow.com/questions/4998908/
+  dataURItoBlob(dataURI: string) {
+    const binary = atob(dataURI.split(',')[1]);
+    let array: number[] = [];
+    for(let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: 'image/png'});
   }
 
   /*grid = 50;
