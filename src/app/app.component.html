@@ -1,4 +1,8 @@
 <canvas #htmlCanvas id="canvas" width="300" height="300"></canvas>
-
+<br />
+<br />
+<input type="file" (change) = onUpload($event)>
+<br />
+<br />
 <a href="#" (click) = onSave($event)>Download canvas as image</a><br>
 <a href="#" (click) = onPush()>Push image to server</a>

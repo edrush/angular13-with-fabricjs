@@ -97,6 +97,28 @@ export class AppComponent implements OnInit {
     canvas.add(textEditable);
   }
 
+  onUpload(event) {
+    const file:File = event.target.files[0];
+    const canvas = this.canvas;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (f) {
+        // @ts-ignore
+        const data = f.target.result;
+        if ('string' === typeof data) {
+          fabric.Image.fromURL(data, function (img) {
+            //const oImg = img.set({left: 0, top: 0, angle: 0, width: 500, height: 500}).scale(0.5);
+            const oImg = img.scale(0.1);
+            canvas.add(oImg).renderAll();
+          });
+        }
+
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   onSave(event?: MouseEvent) {
     // @ts-ignore
     event.target.href = this.canvas.toDataURL({
