@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
       left: 10,
       top: 10,
       selectable: false,
+      hoverCursor: 'inherit',
     }, 150);
 
     this.loadSVG('/assets/castle_large.svg', canvas, {
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit {
       left: canvas.getWidth() - 10,
       top: canvas.getHeight() - 10,
       selectable: false,
+      hoverCursor: 'inherit',
     });
 
     const font = new FontFaceObserver('Okta Neue');
