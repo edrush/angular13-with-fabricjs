@@ -3,7 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { fabric } from 'fabric';
-import * as FontFaceObserver from 'fontfaceobserver';
+import FontFaceObserver from 'fontfaceobserver';
 
 @Component({
   selector: 'app-root',
