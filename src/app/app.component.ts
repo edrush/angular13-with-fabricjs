@@ -67,8 +67,8 @@ export class AppComponent implements OnInit {
 
       // Render the Textbox in canvas
       canvas.add(textEditable);
-    }, function () {
-      console.log('Font "Okta Neue" is not available');
+    }).catch(function(e) {
+      console.log(e)
     });
   }
 
