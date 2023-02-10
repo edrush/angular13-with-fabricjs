@@ -30,58 +30,26 @@ export class AppComponent implements OnInit {
 
     const canvas = this.canvas;
 
-    let group = [];
-    fabric.loadSVGFromURL('/assets/castle_small.svg', function () {
-        let loadedObjects = new fabric.Group(group);
-        loadedObjects.scaleToWidth(150).set({
-          left: 10,
-          top: 10,
-          selectable: false,
-        });
-        canvas.add(loadedObjects);
-        canvas.renderAll();
-      },
-      function (item, object) {
-        object.set('id', item.getAttribute('id'));
-        // @ts-ignore
-        group.push(object);
-    });
+    this.loadSVG('/assets/castle_small.svg', canvas, {
+      left: 10,
+      top: 10,
+      selectable: false,
+    }, 150);
 
-    let group2 = [];
-    fabric.loadSVGFromURL('/assets/castle_large.svg', function () {
-        let loadedObjects = new fabric.Group(group2);
-        loadedObjects.scaleToWidth(400).set({
-          originX: 'center',
-          originY: 'center',
-          left: canvas.getWidth() / 2,
-          top: canvas.getHeight() / 2,
-        });
-        canvas.add(loadedObjects);
-        canvas.renderAll();
-      },
-      function (item, object) {
-        object.set('id', item.getAttribute('id'));
-        // @ts-ignore
-        group2.push(object);
-    });
+    this.loadSVG('/assets/castle_large.svg', canvas, {
+      originX: 'center',
+      originY: 'center',
+      left: canvas.getWidth() / 2,
+      top: canvas.getHeight() / 2,
+    }, 400);
 
-    let group3 = [];
-    fabric.loadSVGFromURL('/assets/Logo-signseeing.svg', function () {
-        let loadedObjects = new fabric.Group(group3);
-        loadedObjects.set({
-          originX: 'right',
-          originY: 'bottom',
-          left: canvas.getWidth() - 10,
-          top: canvas.getHeight() - 10,
-          selectable: false,
-        });
-        canvas.add(loadedObjects);
-        canvas.renderAll();
-      },
-      function (item, object) {
-        object.set('id', item.getAttribute('id'));
-        // @ts-ignore
-        group3.push(object);
+
+    this.loadSVG('/assets/Logo-signseeing.svg', canvas, {
+      originX: 'right',
+      originY: 'bottom',
+      left: canvas.getWidth() - 10,
+      top: canvas.getHeight() - 10,
+      selectable: false,
     });
 
     let textEditable = new fabric.Textbox(
@@ -155,5 +123,21 @@ export class AppComponent implements OnInit {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], {type: 'image/png'});
+  }
+
+  loadSVG(path: string, canvas: fabric.Canvas, options: Object, scaleToWidth?: number) {
+    let group = [];
+    fabric.loadSVGFromURL(path, function (group) {
+        let loadedObjects = new fabric.Group(group);
+        scaleToWidth && loadedObjects.scaleToWidth(scaleToWidth);
+        loadedObjects.set(options);
+        canvas.add(loadedObjects);
+        canvas.renderAll();
+      },
+      function (item, object) {
+        object.set('id', item.getAttribute('id'));
+        // @ts-ignore
+        group.push(object);
+      });
   }
 }
