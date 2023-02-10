@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  HostListener,
 } from '@angular/core';
 import { fabric } from 'fabric';
 import FontFaceObserver from 'fontfaceobserver';
@@ -86,7 +87,13 @@ export class AppComponent implements OnInit {
         if ('string' === typeof data) {
           fabric.Image.fromURL(data, function (img) {
             //const oImg = img.set({left: 0, top: 0, angle: 0, width: 500, height: 500}).scale(0.5);
-            const oImg = img.scale(0.1);
+            const oImg = img.scale(0.5);
+            img.set({
+              originX: 'center',
+              originY: 'center',
+              left: canvas.getWidth() / 2,
+              top: canvas.getHeight() / 2,
+            })
             canvas.add(oImg).renderAll();
           });
         }
@@ -116,6 +123,14 @@ export class AppComponent implements OnInit {
       body: formData
     })
       .then(data => console.log(data))
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if(event.key === 'Delete' || event.key === 'Backspace') {
+      let activeObject = this.canvas.getActiveObject();
+      activeObject&& activeObject.originX === 'center' && this.canvas.remove(activeObject);
+    }
   }
 
   getCanvasBlob(canvas: fabric.Canvas) {
