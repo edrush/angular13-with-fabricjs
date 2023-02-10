@@ -52,17 +52,24 @@ export class AppComponent implements OnInit {
       selectable: false,
     });
 
-    let textEditable = new fabric.Textbox(
-      'Ein Schloß am Chiemsee...', {
-        originY: 'bottom',
-        left: 10,
-        top: canvas.getHeight() - 10,
-        width: 500,
-        editable: true
-      }).set({fill: '#FFF'});
+    const FontFaceObserver = require('fontfaceobserver');
+    const font = new FontFaceObserver('Okta Neue');
 
-    // Render the Textbox in canvas
-    canvas.add(textEditable);
+    font.load().then(function () {
+      const textEditable = new fabric.Textbox(
+        'Mehr entdecken. Alles erfahren.', {
+          originY: 'bottom',
+          left: 10,
+          top: canvas.getHeight() - 10,
+          width: 500,
+          editable: true
+        }).set({fill: '#FFF', fontFamily: 'Okta Neue'});
+
+      // Render the Textbox in canvas
+      canvas.add(textEditable);
+    }, function () {
+      console.log('Font "Okta Neue" is not available');
+    });
   }
 
   onUpload(event) {

@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Okta Neue';
+  src: url('../assets/Okta Neue Regular.otf');
+}
+
+a {
+  font-family: "Okta Neue", serif;
+}
