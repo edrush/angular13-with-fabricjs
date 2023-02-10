@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { fabric } from 'fabric';
+import * as FontFaceObserver from 'fontfaceobserver';
 
 @Component({
   selector: 'app-root',
@@ -52,7 +53,6 @@ export class AppComponent implements OnInit {
       selectable: false,
     });
 
-    const FontFaceObserver = require('fontfaceobserver');
     const font = new FontFaceObserver('Okta Neue');
 
     font.load().then(function () {
