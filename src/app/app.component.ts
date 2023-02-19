@@ -66,7 +66,19 @@ export class AppComponent implements OnInit {
           top: canvas.getHeight() - 10,
           width: 500,
           editable: true
-        }).set({fill: '#FFF', fontFamily: 'Okta Neue'});
+        })
+        .set({fill: '#FFF', fontFamily: 'Okta Neue', lockMovementX: true, lockMovementY: true, hoverCursor: 'inherit'})
+        .setControlsVisibility({
+          bl: false,
+          br: false,
+          ml: false,
+          mt: false,
+          mr: false,
+          mb: false,
+          mtr: false,
+          tl: false,
+        })
+      ;
 
       // Render the Textbox in canvas
       canvas.add(textEditable);
@@ -87,14 +99,16 @@ export class AppComponent implements OnInit {
         if ('string' === typeof data) {
           fabric.Image.fromURL(data, function (img) {
             //const oImg = img.set({left: 0, top: 0, angle: 0, width: 500, height: 500}).scale(0.5);
-            const oImg = img.scale(0.5);
+            img.scale(0.5);
             img.set({
               originX: 'center',
               originY: 'center',
               left: canvas.getWidth() / 2,
               top: canvas.getHeight() / 2,
-            })
-            canvas.add(oImg).renderAll();
+            });
+            canvas.width && img.scaleToWidth(canvas.width*0.5);
+            canvas.height && img.scaleToHeight(canvas.height*0.5);
+            canvas.add(img).renderAll();
           });
         }
 
@@ -154,6 +168,12 @@ export class AppComponent implements OnInit {
     fabric.loadSVGFromURL(path, function (group) {
         let loadedObjects = new fabric.Group(group);
         scaleToWidth && loadedObjects.scaleToWidth(scaleToWidth);
+        loadedObjects.setControlsVisibility({
+          ml: false,
+          mt: false,
+          mr: false,
+          mb: false,
+        });
         loadedObjects.set(options);
         canvas.add(loadedObjects);
         canvas.renderAll();
