@@ -13,9 +13,12 @@ import FontFaceObserver from 'fontfaceobserver';
 })
 export class AppComponent implements OnInit {
 
-  output: string[] = [];
-
   canvas: fabric.Canvas;
+  style = {
+    canvas: {
+      padding: 35
+    }
+  }
 
   constructor() {
     // Initialization inside the constructor
@@ -33,8 +36,8 @@ export class AppComponent implements OnInit {
     const canvas = this.canvas;
 
     this.loadSVG('/assets/castle_small.svg', canvas, {
-      left: 10,
-      top: 10,
+      left: this.style.canvas.padding,
+      top: this.style.canvas.padding,
       selectable: false,
       hoverCursor: 'inherit',
     }, 150);
@@ -50,20 +53,20 @@ export class AppComponent implements OnInit {
     this.loadSVG('/assets/Logo-signseeing.svg', canvas, {
       originX: 'right',
       originY: 'bottom',
-      left: canvas.getWidth() - 10,
-      top: canvas.getHeight() - 10,
+      left: canvas.getWidth() - this.style.canvas.padding,
+      top: canvas.getHeight() - this.style.canvas.padding,
       selectable: false,
       hoverCursor: 'inherit',
     });
 
     const font = new FontFaceObserver('Okta Neue');
 
-    font.load().then(function () {
+    font.load().then(() => {
       const textEditable = new fabric.Textbox(
         'Mehr entdecken. Alles erfahren.', {
           originY: 'bottom',
-          left: 10,
-          top: canvas.getHeight() - 10,
+          left: this.style.canvas.padding,
+          top: canvas.getHeight() - this.style.canvas.padding,
           width: 500,
           editable: true
         })
