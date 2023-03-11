@@ -1,9 +1,3 @@
 a {
   font-family: "Okta Neue", serif;
 }
-
-#canvas {
-  border-radius: 25px;
-  outline: 5px solid #fff;
-  outline-offset: -10px;
-}

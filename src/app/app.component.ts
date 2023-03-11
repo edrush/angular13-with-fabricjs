@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   canvas: fabric.Canvas;
   style = {
     canvas: {
-      padding: 35
+      padding: 40
     }
   }
 
@@ -27,13 +27,38 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {
-      backgroundColor: '#5b240d',
       width: 1024,
       height: 680,
       selection: false,
     });
 
     const canvas = this.canvas;
+
+    const outerBorder = new fabric.Rect({
+      left: 0,
+      top: 0,
+      width: this.canvas.getWidth() - 5,
+      height: this.canvas.getHeight() - 5,
+      fill: '#fff',
+      stroke: "#5b240d",
+      strokeWidth: 5,
+      rx: 30,
+      ry: 30,
+    });
+    canvas.add(outerBorder);
+
+    const innerBorder = new fabric.Rect({
+      left: 5,
+      top: 5,
+      width: this.canvas.getWidth() - 16,
+      height: this.canvas.getHeight() - 16,
+      fill: '#5b240d',
+      stroke: "#fff",
+      strokeWidth: 6,
+      rx: 30,
+      ry: 30,
+    });
+    canvas.add(innerBorder);
 
     this.loadSVG('/assets/castle_small.svg', canvas, {
       left: this.style.canvas.padding,
