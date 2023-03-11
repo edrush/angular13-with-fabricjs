@@ -126,7 +126,7 @@ export class AppComponent implements OnInit {
       format: "png"
     });
     // @ts-ignore
-    event.target.download = 'canvas.png';
+    event.target.download = 'Schildgrafik.png';
   }
 
   onPush() {
