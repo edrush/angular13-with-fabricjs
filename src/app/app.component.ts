@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
       top: canvas.getHeight() - this.style.canvas.padding,
       selectable: false,
       hoverCursor: 'inherit',
-    });
+    }, 150);
 
     const font = new FontFaceObserver('Okta Neue');
 
