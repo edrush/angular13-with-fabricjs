@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
     });
     canvas.add(innerBorder);
 
-    this.loadSVG('/assets/castle_small.svg', canvas, {
+    this.loadImage('/assets/2_small.png', canvas, {
       left: this.style.canvas.padding,
       top: this.style.canvas.padding,
       selectable: false,
@@ -211,5 +211,19 @@ export class AppComponent implements OnInit {
         // @ts-ignore
         group.push(object);
       });
+  }
+
+  loadImage(url: string, canvas: fabric.Canvas, options: Object, scaleToWidth?: number) {
+    fabric.Image.fromURL(url, function(oImg) {
+      scaleToWidth && oImg.scaleToWidth(scaleToWidth);
+      oImg.setControlsVisibility({
+        ml: false,
+        mt: false,
+        mr: false,
+        mb: false,
+      });
+      oImg.set(options);
+      canvas.add(oImg);
+    });
   }
 }
